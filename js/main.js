@@ -2,6 +2,8 @@ const ADVERTISEMENT_COUNT = 10;
 
 const QUANTITY_NUMBER_OF_POINT = 5;
 
+const FEATURE_COUNT_MIN = 1;
+
 const TITLES = [
   'Милая, уютная квартира в Казани',
   'Странный замок на окраине',
@@ -68,11 +70,6 @@ const GuestCount = {
   MAX: 25,
 };
 
-const FeatureCount = {
-  MIN: 1,
-  MAX: 6,
-};
-
 const PhotoCount = {
   MIN: 1,
   MAX: 3,
@@ -119,7 +116,11 @@ const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0,
 
 const getRandomElements = () => Math.random() - 0.5;
 
-const createFeatures = (features) => Array.from(features.sort(getRandomElements)).slice(getRandomPositiveInteger(FeatureCount.MIN, FeatureCount.MAX));
+const createFeatures = (features) => {
+  const shuffledFeatures = features.sort(getRandomElements);
+  const featuresCount = getRandomPositiveInteger(FEATURE_COUNT_MIN, features.length);
+  return shuffledFeatures.slice(0, featuresCount);
+};
 
 const createPhotos = () => Array.from({length: getRandomPositiveInteger(PhotoCount.MIN, PhotoCount.MAX)}, () => getRandomArrayElement(PHOTOS));
 
@@ -130,33 +131,28 @@ const createAuthorAvatar = () => {
   };
 };
 
-const getLatitude = () => getRandomFloat(Latitude.MIN, Latitude.MAX, QUANTITY_NUMBER_OF_POINT);
-
-const getLongitude = () => getRandomFloat(Longitude.MIN, Longitude.MAX, QUANTITY_NUMBER_OF_POINT);
-
-const generateLatitude = getLatitude();
-
-const generateLongitude = getLongitude();
-
 const createCoordinates = () => ({
-  lat: generateLatitude,
-  lng: generateLongitude,
+  lat: getRandomFloat(Latitude.MIN, Latitude.MAX, QUANTITY_NUMBER_OF_POINT),
+  lng: getRandomFloat(Longitude.MIN, Longitude.MAX, QUANTITY_NUMBER_OF_POINT),
 });
 
-const createOffer = () => ({
-  title: getRandomArrayElement(TITLES),
-  address: `${generateLatitude}, ${generateLongitude}`,
-  price: getRandomPositiveInteger(Price.MIN, Price.MAX),
-  type: getRandomArrayElement(TYPES),
-  rooms: getRandomPositiveInteger(RoomCount.MIN, RoomCount.MAX),
-  guests: getRandomPositiveInteger(GuestCount.MIN, GuestCount.MAX),
-  checkin: getRandomArrayElement(CHECK_IN_OUT_INTERVALS),
-  checkout: getRandomArrayElement(CHECK_IN_OUT_INTERVALS),
-  features: createFeatures(FEATURES),
-  description: getRandomArrayElement(DESCRIPTIONS),
-  photos: createPhotos(),
-  location: createCoordinates(),
-});
+const createOffer = () => {
+  const coordinates = createCoordinates();
+  return {
+    title: getRandomArrayElement(TITLES),
+    address: `${coordinates.lat}, ${coordinates.lng}`,
+    price: getRandomPositiveInteger(Price.MIN, Price.MAX),
+    type: getRandomArrayElement(TYPES),
+    rooms: getRandomPositiveInteger(RoomCount.MIN, RoomCount.MAX),
+    guests: getRandomPositiveInteger(GuestCount.MIN, GuestCount.MAX),
+    checkin: getRandomArrayElement(CHECK_IN_OUT_INTERVALS),
+    checkout: getRandomArrayElement(CHECK_IN_OUT_INTERVALS),
+    features: createFeatures(FEATURES),
+    description: getRandomArrayElement(DESCRIPTIONS),
+    photos: createPhotos(),
+    location: coordinates,
+  };
+};
 
 const createAdvertisement = () => ({
   author: createAuthorAvatar(),
