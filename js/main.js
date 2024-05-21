@@ -1,8 +1,12 @@
+const ADVERTISEMENT_COUNT = 10;
+
+const QUANTITY_NUMBER_OF_POINT = 5;
+
 const TITLES = [
   'Милая, уютная квартира в Казани',
   'Странный замок на окраине',
-  'Что это было...',
-  'Неожиданный отпуск удался',
+  'Что это...',
+  'Приятное мето для семейного отдыха',
   'Хочу жить в этой квартире!',
   'Шумные соседи и толпы тараканов',
   'Прекрасное путешествие и отличное место',
@@ -35,9 +39,9 @@ const FEATURES = [
 const DESCRIPTIONS = [
   'Светлая, уютная.',
   'Без посторонних запахов.',
-  'Клопы сожрали за ночь.',
+  'Клопы сожрут за ночь.',
   'Есть все необходимое для жизни и даже больше.',
-  'Очень милые хозяева, угостили пряником при заезде.',
+  'Очень милые хозяева, угостят пряником при заезде.',
   'Очень тихий район, не считая вечно лающих собак под окнами.',
   'Здесь поместятся только мыши',
   'Все отлично.',
@@ -51,7 +55,7 @@ const PHOTOS = [
 
 const Price = {
   MIN: 100,
-  MAX: 100000,
+  MAX: 10000,
 };
 
 const RoomCount = {
@@ -64,9 +68,14 @@ const GuestCount = {
   MAX: 25,
 };
 
+const FeatureCount = {
+  MIN: 1,
+  MAX: 6,
+};
+
 const PhotoCount = {
   MIN: 1,
-  MAX: 5,
+  MAX: 3,
 };
 
 const Latitude = {
@@ -78,3 +87,74 @@ const Longitude = {
   MIN: 139.70000,
   MAX: 139.80000,
 };
+
+// Функция получения целого числа из переданного диапазона
+
+const getRandomPositiveInteger = (min, max) => {
+  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
+  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+};
+
+// Функция получения числа с плавающей точкой из переданного диапазона
+
+const getRandomInteger = (min, max, quantity) => (Math.random() * (max - min) + min).toFixed(quantity);
+
+const createAvatarGenerator = () => {
+  let lastIdAvatar = 0;
+
+  return function () {
+    lastIdAvatar += 1;
+    if (lastIdAvatar < 10) {
+      return `0${lastIdAvatar}`;
+    }
+    return lastIdAvatar;
+  };
+};
+
+const getAvatar = createAvatarGenerator();
+
+const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
+
+const getRandomElements = () => Math.random() - 0.5;
+
+const creatFeatures = (features) => Array.from(features.sort(getRandomElements)).slice(getRandomPositiveInteger(FeatureCount.MIN, FeatureCount.MAX)).join(', ');
+
+const createPhotos = () => Array.from({length: getRandomPositiveInteger(PhotoCount.MIN, PhotoCount.MAX)}, () => getRandomArrayElement(PHOTOS));
+
+const createAuthorAvatar = () => {
+  const id = getAvatar();
+  return {
+    avatar: `img/avatars/user${id}.png`,
+  };
+};
+
+const createCoordinates = () => `${getRandomInteger(Latitude.MIN, Latitude.MAX, QUANTITY_NUMBER_OF_POINT)}, ${getRandomInteger(Longitude.MIN, Longitude.MAX, QUANTITY_NUMBER_OF_POINT)}`;
+
+const createOffer = () => {
+  const coordinates = createCoordinates();
+  return {
+    title: getRandomArrayElement(TITLES),
+    address: coordinates,
+    price: getRandomPositiveInteger(Price.MIN, Price.MAX),
+    type: getRandomArrayElement(TYPES),
+    rooms: getRandomPositiveInteger(RoomCount.MIN, RoomCount.MAX),
+    guests: getRandomPositiveInteger(GuestCount.MIN, GuestCount.MAX),
+    checkin: getRandomArrayElement(CHECK_IN_OUT_INTERVALS),
+    checkout: getRandomArrayElement(CHECK_IN_OUT_INTERVALS),
+    features: creatFeatures(FEATURES),
+    description: getRandomArrayElement(DESCRIPTIONS),
+    photos: createPhotos(),
+    location: coordinates,
+  };
+};
+
+const createAdvertisement = () => ({
+  author: createAuthorAvatar(),
+  offer: createOffer(),
+});
+
+const generateAdvertisement = () => Array.from({length: ADVERTISEMENT_COUNT}, createAdvertisement);
+
+generateAdvertisement();
