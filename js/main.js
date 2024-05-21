@@ -99,7 +99,7 @@ const getRandomPositiveInteger = (min, max) => {
 
 // Функция получения числа с плавающей точкой из переданного диапазона
 
-const getRandomInteger = (min, max, quantity) => (Math.random() * (max - min) + min).toFixed(quantity);
+const getRandomFloat = (min, max, quantity) => (Math.random() * (max - min) + min).toFixed(quantity);
 
 const createAvatarGenerator = () => {
   let lastIdAvatar = 0;
@@ -119,7 +119,7 @@ const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0,
 
 const getRandomElements = () => Math.random() - 0.5;
 
-const creatFeatures = (features) => Array.from(features.sort(getRandomElements)).slice(getRandomPositiveInteger(FeatureCount.MIN, FeatureCount.MAX)).join(', ');
+const createFeatures = (features) => Array.from(features.sort(getRandomElements)).slice(getRandomPositiveInteger(FeatureCount.MIN, FeatureCount.MAX));
 
 const createPhotos = () => Array.from({length: getRandomPositiveInteger(PhotoCount.MIN, PhotoCount.MAX)}, () => getRandomArrayElement(PHOTOS));
 
@@ -130,25 +130,33 @@ const createAuthorAvatar = () => {
   };
 };
 
-const createCoordinates = () => `${getRandomInteger(Latitude.MIN, Latitude.MAX, QUANTITY_NUMBER_OF_POINT)}, ${getRandomInteger(Longitude.MIN, Longitude.MAX, QUANTITY_NUMBER_OF_POINT)}`;
+const getLatitude = () => getRandomFloat(Latitude.MIN, Latitude.MAX, QUANTITY_NUMBER_OF_POINT);
 
-const createOffer = () => {
-  const coordinates = createCoordinates();
-  return {
-    title: getRandomArrayElement(TITLES),
-    address: coordinates,
-    price: getRandomPositiveInteger(Price.MIN, Price.MAX),
-    type: getRandomArrayElement(TYPES),
-    rooms: getRandomPositiveInteger(RoomCount.MIN, RoomCount.MAX),
-    guests: getRandomPositiveInteger(GuestCount.MIN, GuestCount.MAX),
-    checkin: getRandomArrayElement(CHECK_IN_OUT_INTERVALS),
-    checkout: getRandomArrayElement(CHECK_IN_OUT_INTERVALS),
-    features: creatFeatures(FEATURES),
-    description: getRandomArrayElement(DESCRIPTIONS),
-    photos: createPhotos(),
-    location: coordinates,
-  };
-};
+const getLongitude = () => getRandomFloat(Longitude.MIN, Longitude.MAX, QUANTITY_NUMBER_OF_POINT);
+
+const generateLatitude = getLatitude();
+
+const generateLongitude = getLongitude();
+
+const createCoordinates = () => ({
+  lat: generateLatitude,
+  lng: generateLongitude,
+});
+
+const createOffer = () => ({
+  title: getRandomArrayElement(TITLES),
+  address: `${generateLatitude}, ${generateLongitude}`,
+  price: getRandomPositiveInteger(Price.MIN, Price.MAX),
+  type: getRandomArrayElement(TYPES),
+  rooms: getRandomPositiveInteger(RoomCount.MIN, RoomCount.MAX),
+  guests: getRandomPositiveInteger(GuestCount.MIN, GuestCount.MAX),
+  checkin: getRandomArrayElement(CHECK_IN_OUT_INTERVALS),
+  checkout: getRandomArrayElement(CHECK_IN_OUT_INTERVALS),
+  features: createFeatures(FEATURES),
+  description: getRandomArrayElement(DESCRIPTIONS),
+  photos: createPhotos(),
+  location: createCoordinates(),
+});
 
 const createAdvertisement = () => ({
   author: createAuthorAvatar(),
