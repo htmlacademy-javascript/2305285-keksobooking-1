@@ -3,8 +3,7 @@ const getRandomInit = (min, max, quantity) => {
     if (max <= min) {
       min = [max, max = min][0];
     }
-    const randomInit = (Math.random() * (max - min) + min).toFixed(quantity);
-    return randomInit;
+    return (Math.random() * (max - min) + min).toFixed(quantity);
   }
   return NaN;
 };
