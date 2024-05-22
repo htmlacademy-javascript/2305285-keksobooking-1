@@ -11,16 +11,6 @@ const getRandomPositiveInteger = (min, max) => {
 
 const getRandomFloat = (min, max, quantity) => (Math.random() * (max - min) + min).toFixed(quantity);
 
-const createAvatarGenerator = () => {
-  let lastIdAvatar = 0;
+const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-  return function () {
-    lastIdAvatar += 1;
-    if (lastIdAvatar < 10) {
-      return `0${lastIdAvatar}`;
-    }
-    return lastIdAvatar;
-  };
-};
-
-export { getRandomPositiveInteger, getRandomFloat, createAvatarGenerator };
+export { getRandomPositiveInteger, getRandomFloat, getRandomArrayElement };

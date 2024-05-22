@@ -1,4 +1,4 @@
-import { getRandomPositiveInteger, getRandomFloat, createAvatarGenerator } from './util.js';
+import { getRandomPositiveInteger, getRandomFloat, getRandomArrayElement } from './util.js';
 
 const ADVERTISEMENT_COUNT = 10;
 
@@ -87,9 +87,19 @@ const Longitude = {
   MAX: 139.80000,
 };
 
-const getAvatar = createAvatarGenerator();
+const createAvatarGenerator = () => {
+  let lastIdAvatar = 0;
 
-const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
+  return function () {
+    lastIdAvatar += 1;
+    if (lastIdAvatar < 10) {
+      return `0${lastIdAvatar}`;
+    }
+    return lastIdAvatar;
+  };
+};
+
+const getAvatar = createAvatarGenerator();
 
 const getRandomElements = () => Math.random() - 0.5;
 
