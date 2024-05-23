@@ -13,8 +13,8 @@ const getRandomFloat = (min, max, quantity) => (Math.random() * (max - min) + mi
 
 // Проверка комнат на четность
 
-const getEnding = (room) => {
-  if (room % 2) {
+const getEnding = (number) => {
+  if (number % 2) {
     return 'комнат';
   }
   return 'комнаты';

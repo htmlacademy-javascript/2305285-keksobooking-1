@@ -41,10 +41,3 @@ const getSimilarAdvertisemen = (element) => {
 };
 
 export { getSimilarAdvertisemen };
-
-// advertisementElement.querySelector('.popup__features').textContent = offer.features;
-
-// const popupFeaturesElement = document.createElement('li');
-// popupFeaturesElement.classList.add('popup__feature');
-// popupFeaturesElement.classList.add(`popup__feature--${offer.features[0]}`);
-// advertisementElement.querySelector('.popup__features').append(popupFeaturesElement);
