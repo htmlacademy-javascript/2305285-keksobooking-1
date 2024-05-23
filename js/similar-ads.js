@@ -11,6 +11,7 @@ const getSimilarAdvertisemen = (element) => {
     advertisementElement.querySelector('.popup__title').textContent = offer.title;
     advertisementElement.querySelector('.popup__text--address').textContent = offer.address;
     advertisementElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
+    advertisementElement.querySelector('.popup__type').textContent = offer.type.name;
     advertisementElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} ${getEnding(offer.rooms)} для ${offer.guests} гостей`;
     advertisementElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
