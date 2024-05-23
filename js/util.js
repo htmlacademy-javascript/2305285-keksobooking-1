@@ -11,15 +11,17 @@ const getRandomPositiveInteger = (min, max) => {
 
 const getRandomFloat = (min, max, quantity) => (Math.random() * (max - min) + min).toFixed(quantity);
 
-// Проверка комнат на четность
+// Проверка комнат на количество
 
-const getEnding = (number) => {
-  if (number % 2) {
-    return 'комнат';
+const getRoomPlural = (number) => {
+  if (number === 1) {
+    return 'комната';
+  } else if (number <= 4) {
+    return 'комнаты';
   }
-  return 'комнаты';
+  return 'комнат';
 };
 
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-export { getRandomPositiveInteger, getRandomFloat, getRandomArrayElement, getEnding };
+export { getRandomPositiveInteger, getRandomFloat, getRandomArrayElement, getRoomPlural };

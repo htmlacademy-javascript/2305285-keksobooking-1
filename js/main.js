@@ -1,6 +1,6 @@
-import { getSimilarAdvertisemen } from './similar-ads.js';
+import { renderCard } from './card.js';
 import { generateAdvertisement } from './data.js';
 
 const advertisements = generateAdvertisement();
 
-getSimilarAdvertisemen(advertisements[0]);
+renderCard(advertisements[0]);
