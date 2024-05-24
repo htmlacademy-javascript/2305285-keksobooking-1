@@ -1,3 +1,6 @@
+import { renderCard } from './card.js';
 import { generateAdvertisement } from './data.js';
 
-generateAdvertisement();
+const advertisements = generateAdvertisement();
+
+renderCard(advertisements[0]);
