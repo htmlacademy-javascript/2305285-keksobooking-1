@@ -18,26 +18,11 @@ const TITLES = [
 ];
 
 const TYPES = [
-  {
-    type: 'palace',
-    name: 'Дворец',
-  },
-  {
-    type: 'flat',
-    name: 'Квартира',
-  },
-  {
-    type: 'house',
-    name: 'Дом',
-  },
-  {
-    type: 'bungalow',
-    name: 'Бунгало',
-  },
-  {
-    type: 'hotel',
-    name: 'Отель',
-  },
+  'palace',
+  'flat',
+  'house',
+  'bungalow',
+  'hotel',
 ];
 
 const CHECK_IN_OUT_INTERVALS = [
