@@ -1,19 +1,23 @@
-import { makeElementInactive, makeElementActive } from './util.js';
+import { toggleElementState } from './util.js';
 
 const filterFormElement = document.querySelector('.map__filters');
 const interactiveFilterElements = filterFormElement.querySelectorAll('.map__filter');
 const mapCheckboxElements = filterFormElement.querySelectorAll('.map__checkbox');
 
-const setInactiveFilter = () => {
-  filterFormElement.classList.add('map__filters--disabled');
-  interactiveFilterElements.forEach((element) => makeElementInactive(element));
-  mapCheckboxElements.forEach((element) => makeElementInactive(element));
+const toggleFilterState = (isActive) => {
+  filterFormElement.classList.toggle('map__filters--disabled', !isActive);
+  interactiveFilterElements.forEach((element) => toggleElementState(element, isActive));
+  mapCheckboxElements.forEach((element) => toggleElementState(element, isActive));
 };
 
-const setActiveFilter = () => {
-  filterFormElement.classList.remove('map__filters--disabled');
-  interactiveFilterElements.forEach((element) => makeElementActive(element));
-  mapCheckboxElements.forEach((element) => makeElementActive(element));
+const setFilterInactive = () => {
+  toggleFilterState(false);
 };
 
-export { setInactiveFilter, setActiveFilter };
+const setFilterActive = () => {
+  toggleFilterState(true);
+};
+
+setFilterInactive();
+
+export { setFilterActive };

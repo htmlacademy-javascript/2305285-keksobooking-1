@@ -1,20 +1,21 @@
-import { makeElementInactive, makeElementActive } from './util.js';
-import { setInactiveFilter, setActiveFilter } from './filters.js';
+import { toggleElementState } from './util.js';
 
 const formElement = document.querySelector('.ad-form');
 const interactiveFormElements = formElement.querySelectorAll('.ad-form__element');
 
-const setInactiveForm = () => {
-  formElement.classList.add('ad-form--disabled');
-  interactiveFormElements.forEach((element) => makeElementInactive(element));
-  setInactiveFilter();
+const toggleFormState = (isActive) => {
+  formElement.classList.toggle('ad-form--disabled', !isActive);
+  interactiveFormElements.forEach((element) => toggleElementState(element, isActive));
 };
 
-const setActiveForm = () => {
-  formElement.classList.remove('ad-form--disabled');
-  interactiveFormElements.forEach((element) => makeElementActive(element));
-  setActiveFilter();
+const setFormInactive = () => {
+  toggleFormState(false);
 };
 
-setActiveForm();
-setInactiveForm();
+const setFormActive = () => {
+  toggleFormState(true);
+};
+
+setFormInactive ();
+
+export { setFormActive };

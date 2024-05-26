@@ -22,18 +22,12 @@ const getRoomPlural = (number) => {
   return 'комнат';
 };
 
-//Добавляет неактивное состояние
+//Добавляет состояние активности
 
-const makeElementInactive = (element) => {
-  element.disabled = true;
-};
-
-//Добавляет активное состояние
-
-const makeElementActive = (element) => {
-  element.disabled = false;
+const toggleElementState = (element, isActive) => {
+  element.disabled = !isActive;
 };
 
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-export { getRandomPositiveInteger, getRandomFloat, getRandomArrayElement, getRoomPlural, makeElementInactive, makeElementActive };
+export { getRandomPositiveInteger, getRandomFloat, getRandomArrayElement, getRoomPlural, toggleElementState };
