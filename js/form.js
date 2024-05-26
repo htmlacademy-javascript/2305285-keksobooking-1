@@ -16,6 +16,6 @@ const setFormActive = () => {
   toggleFormState(true);
 };
 
-setFormInactive ();
+setFormInactive();
 
 export { setFormActive };
