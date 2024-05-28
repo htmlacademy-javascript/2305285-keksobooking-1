@@ -18,4 +18,4 @@ const setFormActive = () => {
 
 setFormInactive();
 
-export { setFormActive };
+export { setFormActive, formElement };

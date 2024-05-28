@@ -1,5 +1,6 @@
 import './form.js';
 import './filters.js';
+import './validate.js';
 import { renderCard } from './card.js';
 import { generateAdvertisement } from './data.js';
 import { setFormActive } from './form.js';
