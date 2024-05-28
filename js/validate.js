@@ -22,11 +22,19 @@ const MinPricePerNight = {
   'palace': 1000,
 };
 
+const TimeInterval = {
+  '12:00': '12:00',
+  '13:00': '13:00',
+  '14:00': '14:00',
+};
+
 const titleFieldElement = formElement.querySelector('#title');
 const priceFieldElement = formElement.querySelector('#price');
 const roomNumberFieldElement = formElement.querySelector('#room_number');
 const capacityFieldElement = formElement.querySelector('#capacity');
 const typeFieldElement = formElement.querySelector('#type');
+const timeInFieldElement = formElement.querySelector('#timein');
+const timeOutFieldElement = formElement.querySelector('#timeout');
 
 const pristine = new Pristine(formElement, {
   classTo: 'ad-form__element',
@@ -75,11 +83,25 @@ capacityFieldElement.addEventListener('change', () => {
   pristine.validate();
 });
 
-// const validateType = () => MinPricePerNight[typeFieldElement.value].includes(priceFieldElement.value);
+const validateTime = () => TimeInterval[timeInFieldElement.value] === timeOutFieldElement.value;
 
-// pristine.addValidator(typeFieldElement,
-//   validateType
-// );
+pristine.addValidator(timeInFieldElement,
+  validateTime,
+  'Время заезда и выезда должно совпадать'
+);
+
+pristine.addValidator(timeOutFieldElement,
+  validateTime,
+  'Время заезда и выезда должно совпадать'
+);
+
+timeInFieldElement.addEventListener('change', () => {
+  pristine.validate();
+});
+
+timeOutFieldElement.addEventListener('change', () => {
+  pristine.validate();
+});
 
 formElement.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
