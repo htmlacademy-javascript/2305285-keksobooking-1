@@ -22,12 +22,6 @@ const MinPricePerNight = {
   'palace': 1000,
 };
 
-const TimeInterval = {
-  '12:00': '12:00',
-  '13:00': '13:00',
-  '14:00': '14:00',
-};
-
 const titleFieldElement = formElement.querySelector('#title');
 const priceFieldElement = formElement.querySelector('#price');
 const roomNumberFieldElement = formElement.querySelector('#room_number');
@@ -42,11 +36,13 @@ const pristine = new Pristine(formElement, {
   errorTextClass: 'ad-form__element--invalid',
 });
 
-const validateTitle = (value) => value.lenght >= TitleLength.MIN && value.lenght <= TitleLength.MAX;
+const validateTitle = (value) => value.length >= TitleLength.MIN && value.length <= TitleLength.MAX;
+
+const getTitleErrorMessage = () => `От ${TitleLength.MIN} до ${TitleLength.MAX} символов`;
 
 pristine.addValidator(titleFieldElement,
   validateTitle,
-  'От 30 до 100 символов'
+  getTitleErrorMessage
 );
 
 const validatePrice = (value) => value >= MinPricePerNight[typeFieldElement.value] && value <= MAX_PRICE_PER_NIGHT;
@@ -83,25 +79,13 @@ capacityFieldElement.addEventListener('change', () => {
   pristine.validate();
 });
 
-const validateTime = () => TimeInterval[timeInFieldElement.value] === timeOutFieldElement.value;
+const setTimeOut = (evt) => (timeOutFieldElement.value = evt.target.value);
 
-pristine.addValidator(timeInFieldElement,
-  validateTime,
-  'Время заезда и выезда должно совпадать'
-);
+const setTimeIn = (evt) => (timeInFieldElement.value = evt.target.value);
 
-pristine.addValidator(timeOutFieldElement,
-  validateTime,
-  'Время заезда и выезда должно совпадать'
-);
+timeInFieldElement.addEventListener('change', setTimeOut);
 
-timeInFieldElement.addEventListener('change', () => {
-  pristine.validate();
-});
-
-timeOutFieldElement.addEventListener('change', () => {
-  pristine.validate();
-});
+timeOutFieldElement.addEventListener('change', setTimeIn);
 
 formElement.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
