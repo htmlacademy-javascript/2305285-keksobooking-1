@@ -45,7 +45,7 @@
             <option value="3">Три комнаты</option>
           </select>
           <select name="housing-guests" id="housing-guests" class="map__filter">
-            <option value="any" selected>Любое число гостей</option>
+            <option value="any">Любое число гостей</option>
             <option value="2">Два гостя</option>
             <option value="1">Один гость</option>
             <option value="0">Не для гостей</option>
@@ -71,7 +71,7 @@
     <!-- Форма объявления -->
     <section class="notice">
       <h2 class="notice__title">Ваше объявление</h2>
-      <form class="ad-form" method="post" enctype="multipart/form-data" autocomplete="off">
+      <form class="ad-form" action="https://28.javascript.htmlacademy.pro/keksobooking" method="post" enctype="multipart/form-data" autocomplete="off">
         <fieldset class="ad-form-header">
           <legend class="ad-form-header__title">Ваша фотография (для карты)</legend>
           <div class="ad-form-header__upload">
@@ -87,15 +87,15 @@
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="title">Заголовок объявления</label>
-          <input id="title" name="title" type="text" placeholder="Милая, уютная квартирка в центре Токио">
+          <input id="title" name="title" type="text" placeholder="Милая, уютная квартирка в центре Токио" required data-pristine-required-message="Обязательное поле">
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="address">Адрес (координаты)</label>
-          <input id="address" name="address" type="text">
+          <input id="address" name="address" type="text" required readonly data-pristine-required-message="Обязательное поле">
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>
-          <select id="type" name="type">
+          <select id="type" name="type" required data-pristine-required-message="Обязательное поле">
             <option value="bungalow">Бунгало</option>
             <option value="flat" selected>Квартира</option>
             <option value="hotel">Отель</option>
@@ -105,17 +105,17 @@
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-          <input id="price" name="price" type="number" placeholder="5000">
+          <input id="price" name="price" type="number" placeholder="5000" required data-pristine-required-message="Обязательное поле">
           <div class="ad-form__slider"></div>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>
-          <select id="timein" name="timein">
+          <select id="timein" name="timein" required data-pristine-required-message="Обязательное поле">
             <option value="12:00" selected>После 12</option>
             <option value="13:00">После 13</option>
             <option value="14:00">После 14</option>
           </select>
-          <select id="timeout" name="timeout" title="Time to go out">
+          <select id="timeout" name="timeout" title="Time to go out" required data-pristine-required-message="Обязательное поле">
             <option value="12:00" selected>Выезд до 12</option>
             <option value="13:00">Выезд до 13</option>
             <option value="14:00">Выезд до 14</option>
@@ -132,10 +132,10 @@
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="capacity">Количество мест</label>
-          <select id="capacity" name="capacity">
-            <option value="3" selected>для 3 гостей</option>
+          <select id="capacity" name="capacity" required data-pristine-required-message="Обязательное поле">
+            <option value="3">для 3 гостей</option>
             <option value="2">для 2 гостей</option>
-            <option value="1">для 1 гостя</option>
+            <option value="1" selected>для 1 гостя</option>
             <option value="0">не для гостей</option>
           </select>
         </fieldset>
@@ -229,6 +229,7 @@
     </div>
   </template>
 
+  <script src="vendor/pristine/pristine.min.js" type="module"></script>
   <script src="js/main.js" type="module"></script>
 </body>
 </html>
