@@ -75,6 +75,8 @@ const renderCard = (ad) => {
   fragment.appendChild(advertisementElement);
 
   containerElement.appendChild(fragment);
+
+  return advertisementElement;
 };
 
 export { renderCard };
