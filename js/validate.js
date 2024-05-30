@@ -19,7 +19,7 @@ const MinPricePerNight = {
   'flat': 1000,
   'hotel': 3000,
   'house': 5000,
-  'palace': 1000,
+  'palace': 10000,
 };
 
 const titleFieldElement = formElement.querySelector('#title');
@@ -32,8 +32,9 @@ const timeOutFieldElement = formElement.querySelector('#timeout');
 
 const pristine = new Pristine(formElement, {
   classTo: 'ad-form__element',
+  errorClass: 'ad-form__element--invalid',
   errorTextParent: 'ad-form__element',
-  errorTextClass: 'ad-form__element--invalid',
+  errorTextClass: 'text-help'
 });
 
 const validateTitle = (value) => value.length >= TitleLength.MIN && value.length <= TitleLength.MAX;
@@ -47,7 +48,13 @@ pristine.addValidator(titleFieldElement,
 
 const validatePrice = (value) => value >= MinPricePerNight[typeFieldElement.value] && value <= MAX_PRICE_PER_NIGHT;
 
-const getPriceErrorMessage = () => `Не менее ${MinPricePerNight[typeFieldElement.value]} и не более ${ MAX_PRICE_PER_NIGHT} руб.`;
+const getPriceErrorMessage = (value) => {
+  if (value >= MinPricePerNight[typeFieldElement.value]) {
+    return `Максимальная цена ${MAX_PRICE_PER_NIGHT} руб.`;
+  } else if (value <= MAX_PRICE_PER_NIGHT) {
+    return `Минимальная цена ${MinPricePerNight[typeFieldElement.value]} руб.`;
+  }
+};
 
 pristine.addValidator(priceFieldElement,
   validatePrice,
@@ -56,19 +63,14 @@ pristine.addValidator(priceFieldElement,
 
 const validateRoomNumber = () => RoomsOption[roomNumberFieldElement.value].includes(capacityFieldElement.value);
 
-const getRoomErrorMessage = () => `${roomNumberFieldElement.value}
-${roomNumberFieldElement.value === '1' ? 'комната' : 'комнаты'}
-для ${capacityFieldElement.value} гостей
-${roomNumberFieldElement.value === '1' ? 'невозможна' : 'невозможны'}`;
-
 pristine.addValidator(roomNumberFieldElement,
   validateRoomNumber,
-  getRoomErrorMessage
+  'Значение не подходит для выбранного количества гостей'
 );
 
 pristine.addValidator(capacityFieldElement,
   validateRoomNumber,
-  getRoomErrorMessage
+  'Значение не подходит для выбранного количества комнат'
 );
 
 roomNumberFieldElement.addEventListener('change', () => {
