@@ -1,14 +1,15 @@
 import './form.js';
 import './filters.js';
 import './validate.js';
-import { renderCard } from './card.js';
+import './map.js';
+// import { renderCard } from './card.js';
 import { generateAdvertisement } from './data.js';
-import { setFormActive } from './form.js';
+// import { setFormInactive } from './form.js';
 import { setFilterActive } from './filters.js';
 
-const advertisements = generateAdvertisement();
+generateAdvertisement();
 
-renderCard(advertisements[0]);
+// renderCard(advertisements[0]);
 
-setFormActive();
+// setFormActive();
 setFilterActive();
